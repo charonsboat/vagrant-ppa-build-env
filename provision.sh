@@ -9,6 +9,7 @@ build_tools=(
 
     # data transfer tools
     dput
+    git
     wget
 
     # system build tools
@@ -35,6 +36,8 @@ build_tools=(
 # loop through packages and install them
 for i in ${build_tools[@]}
 do
+    echo "Installing Package: ${i}"
+    
     sudo apt-get install -qq ${i}
 done
 
@@ -56,11 +59,11 @@ vagrant_version=1.7.2
 # download vagrant and switch to stable branch
 git clone https://github.com/mitchellh/vagrant.git ${vagrant_source_dir}
 cd ${vagrant_source_dir}
-git checkout tags/${vagrant_version} -b "build_branch"
+git checkout tags/v${vagrant_version} -b "build_branch"
 
 
 # install ruby tools
-gem2.0 install bundler
+sudo gem2.0 install bundler
 
 # build the ruby gem from the vagrant source
 gem2.0 build vagrant.gemspec
@@ -79,3 +82,7 @@ cd ${vagrant_tarball_dir}
 
 # convert the gem to a tarball
 gem2tgz vagrant-${vagrant_version}.gem
+rm vagrant-${vagrant_version}.gem
+
+# extract tarball and prepare package for build configuration
+dh-make vagrant ${vagrant_version} vagrant-${vagrant_version}.tar.gz
