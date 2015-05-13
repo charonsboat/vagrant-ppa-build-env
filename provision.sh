@@ -62,6 +62,20 @@ git checkout tags/${vagrant_version} -b "build_branch"
 # install ruby tools
 gem2.0 install bundler
 
-
 # build the ruby gem from the vagrant source
-gem build vagrant.gemspec
+gem2.0 build vagrant.gemspec
+
+
+# store vagrant tarball directory
+vagrant_tarball_dir="${build_dir}/vagrant-tarball"
+
+# create the directory
+mkdir -p ${vagrant_tarball_dir}
+
+
+# copy the gem to the tarball directory
+cp vagrant-${vagrant_version}.gem ${vagrant_tarball_dir}/
+cd ${vagrant_tarball_dir}
+
+# convert the gem to a tarball
+gem2tgz vagrant-${vagrant_version}.gem
