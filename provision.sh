@@ -26,6 +26,10 @@ build_tools=(
     # resource linter
     lintian
 
+    # ruby build tools
+    ruby2.0
+    gem2deb
+
 )
 
 # loop through packages and install them
@@ -33,3 +37,31 @@ for i in ${build_tools[@]}
 do
     sudo apt-get install -qq ${i}
 done
+
+
+# store build directory since we'll need it in the future
+build_dir="${HOME}/build"
+
+# create the directory we're going to be working in
+mkdir -p ${build_dir}
+cd ${build_dir}
+
+
+# store vagrant source directory
+vagrant_source_dir="${build_dir}/vagrant-source"
+
+# store vagrant version
+vagrant_version=1.7.2
+
+# download vagrant and switch to stable branch
+git clone https://github.com/mitchellh/vagrant.git ${vagrant_source_dir}
+cd ${vagrant_source_dir}
+git checkout tags/${vagrant_version} -b "build_branch"
+
+
+# install ruby tools
+gem2.0 install bundler
+
+
+# build the ruby gem from the vagrant source
+gem build vagrant.gemspec
