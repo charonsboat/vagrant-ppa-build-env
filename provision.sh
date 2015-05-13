@@ -37,7 +37,7 @@ build_tools=(
 for i in ${build_tools[@]}
 do
     echo "Installing Package: ${i}"
-    
+
     sudo apt-get install -qq ${i}
 done
 
@@ -85,4 +85,4 @@ gem2tgz vagrant-${vagrant_version}.gem
 rm vagrant-${vagrant_version}.gem
 
 # extract tarball and prepare package for build configuration
-dh-make vagrant ${vagrant_version} vagrant-${vagrant_version}.tar.gz
+dh_make vagrant ${vagrant_version} vagrant-${vagrant_version}.tar.gz
