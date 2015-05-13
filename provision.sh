@@ -8,6 +8,7 @@ sudo apt-get update -qq
 build_tools=(
 
     # data transfer tools
+    bzr
     dput
     git
     wget
@@ -85,4 +86,4 @@ gem2tgz vagrant-${vagrant_version}.gem
 rm vagrant-${vagrant_version}.gem
 
 # extract tarball and prepare package for build configuration
-dh_make vagrant ${vagrant_version} vagrant-${vagrant_version}.tar.gz
+#bzr dh-make vagrant ${vagrant_version} vagrant-${vagrant_version}.tar.gz
