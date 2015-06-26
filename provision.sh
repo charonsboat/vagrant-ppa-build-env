@@ -63,8 +63,11 @@ cd ${vagrant_source_dir}
 git checkout tags/v${vagrant_version} -b "build_branch"
 
 
+# bundler version
+bundler_version=1.7.15
+
 # install ruby tools
-sudo gem2.0 install bundler
+sudo gem2.0 install bundler -v ${bundler_version}
 
 # build the ruby gem from the vagrant source
 gem2.0 build vagrant.gemspec
@@ -87,3 +90,9 @@ rm vagrant-${vagrant_version}.gem
 
 # extract tarball and prepare package for build configuration
 #bzr dh-make vagrant ${vagrant_version} vagrant-${vagrant_version}.tar.gz
+
+
+
+
+
+# use sbuild or pbuilder to test package building before uploading to launchpad
